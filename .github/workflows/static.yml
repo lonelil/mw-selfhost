@@ -22,13 +22,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Checkout movie-web
         uses: actions/checkout@v4
         with:
           repository: "movie-web/movie-web"
-          path: "movie-web"
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - uses: pnpm/action-setup@v2
@@ -42,14 +39,13 @@ jobs:
           cache: "pnpm"
       - name: Build
         run: |
-          cd movie-web
           pnpm i
           echo "${{ secrets.ENV_FILE }}" > .env
           pnpm build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: 'movie-web/dist'
+          path: 'dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v3
