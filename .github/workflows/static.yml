@@ -34,7 +34,6 @@ jobs:
             exit 1
           fi
           wget $download_url
-          unzip movie-web.zip
       - name: Unzip
         run: |
           mkdir movie-web
