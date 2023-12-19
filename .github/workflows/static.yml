@@ -30,6 +30,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: "movie-web/movie-web"
+          ref: master
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - uses: pnpm/action-setup@v2
