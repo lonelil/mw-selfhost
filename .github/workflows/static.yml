@@ -45,6 +45,7 @@ jobs:
         run: |
           sed -i "s|https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap|https://fonts.lonelil.com/fonts/Satoshi/use.min.css|g" index.html
           sed -i "s|Open Sans|Satoshi Variable|g" tailwind.config.ts
+          sed -i "s|w185|original|g" src/backend/metadata/tmdb.ts
         if: github.repository == 'lonelil/mw-selfhost'
       - name: Build
         run: |
