@@ -24,28 +24,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Checkout movie-web
+        uses: actions/checkout@v4
+        with:
+          repository: "movie-web/movie-web"
+          path: "movie-web"
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      - name: Download latest release
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: 8
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+      - name: Build
         run: |
-          download_url=$(curl -s https://api.github.com/repos/movie-web/movie-web/releases/latest | grep 'browser_' | cut -d\" -f4 | grep 'movie-web.zip')
-          if [ -z "$download_url" ]; then
-            echo "movie-web.zip not found in the latest release"
-            exit 1
-          fi
-          wget $download_url
-      - name: Unzip
-        run: |
-          mkdir movie-web
-          unzip movie-web.zip -d movie-web
-      - name: Edit config
-        run: |
-          decoded_config=$(base64 --decode config.txt)
-          echo "$decoded_config" > movie-web/config.js
+          cd movie-web
+          pnpm i
+          echo "${{ secrets.ENV_FILE }}" > .env
+          pnpm build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: 'movie-web'
+          path: 'movie-web/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v3
