@@ -1,6 +1,10 @@
 name: Deploy to Pages
 
 on:
+  push:
+    paths:
+    - ".github/workflows/static.yml"
+    
   schedule:
   - cron: "0 0 * * 0"
 
