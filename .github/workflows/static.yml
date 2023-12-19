@@ -49,10 +49,10 @@ jobs:
         if: github.repository == 'lonelil/mw-selfhost'
       - name: Build
         run: |
-          cp index.html public/404.html
           echo "${{ secrets.ENV_FILE }}" > .env
           pnpm i
           pnpm build
+          cp dist/index.html dist/404.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
